@@ -1,0 +1,1370 @@
+<!doctype html>
+<html lang="zh-CN">
+ <head> 
+  <meta charset="utf-8"> 
+  <link rel="canonical" href="https://blog.csdn.net/misayaaaaa/article/details/131023424"> 
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+  <meta name="renderer" content="webkit"> 
+  <meta name="force-rendering" content="webkit"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+  <meta name="report" content="{&quot;pid&quot;: &quot;blog&quot;, &quot;spm&quot;:&quot;1001.2101&quot;}"> 
+  <meta name="referrer" content="always"> 
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <link rel="alternate" media="handheld" href="#"> 
+  <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848"> 
+  <meta name="applicable-device" content="pc"> 
+  <link href="https://g.csdnimg.cn/static/logo/favicon32.ico" rel="shortcut icon" type="image/x-icon"> 
+  <title>华为od统一考试B卷【模拟消息队列】C++ 实现-CSDN博客</title>  
+  <meta name="keywords" content="华为od统一考试B卷【模拟消息队列】C++ 实现"> 
+  <meta name="description" content="文章浏览阅读5.1k次。这篇博客介绍如何使用C++模拟实现华为OD考试中的消息队列问题，涉及发布者、消费者、消息发送与订阅的逻辑。文章提供了解题思路及代码实现，并给出了时间与空间限制以及支持的语言环境。
+"> 
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/css/detail_enter-af0ead44cd.min.css"> 
+  <style>
+        #content_views{
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none; 
+            user-select: none; 
+        }
+    </style>  
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/themesSkin/skin-cookblue/skin-cookblue-d114b9ac23.min.css">    
+  <meta name="toolbar" content="{&quot;type&quot;:&quot;0&quot;,&quot;fixModel&quot;:&quot;1&quot;}">    
+  <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/public/sandalstrap/1.4/css/sandalstrap.min.css"> 
+  <style>
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    </style>   
+ 	<style>
+	main div.blog-content-box pre {
+		max-height: 100%;
+		overflow-y: hidden;
+	}
+	</style>
+ </head>  
+ <body class="nodata  " style=""> 
+  <div id="toolbarBox" style="min-height: 48px;"></div>    
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/pc/css/blog_code-01256533b5.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/chart-3456820cac.css"> 
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/swiper/6.0.4/css/swiper.css">   
+  <div class="main_father clearfix d-flex justify-content-center mainfather-concision" style="height:100%;"> 
+   <div class="container clearfix container-concision" id="mainBox">  
+    <main>  
+     <div class="blog-content-box"> 
+      <div class="article-header-box"> 
+       <div class="article-header"> 
+        <div class="article-title-box"> 
+         <h1 class="title-article" id="articleContentId">华为od统一考试B卷【模拟消息队列】C++ 实现</h1> 
+        </div> 
+        <div class="article-info-box"> 
+         <div class="article-bar-top"> 
+          <img class="article-type-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png" alt=""> 
+          <div class="bar-content"> 
+           <a class="follow-nickName " href="https://renjie.blog.csdn.net" target="_blank" rel="noopener" title="MISAYAONE">MISAYAONE</a> 
+           <img class="article-time-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newUpTime2.png" alt=""> 
+           <span class="time">已于&nbsp;2023-06-08 15:45:11&nbsp;修改</span> 
+           <div class="read-count-box"> 
+            <img class="article-read-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes2.png" alt=""> 
+            <span class="read-count">阅读量5.1k</span> 
+            <a id="blog_detail_zk_collection" class="un-collection" data-report-click="{&quot;mod&quot;:&quot;popu_823&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img class="article-collect-img article-heard-img un-collect-status isdefault" style="display:inline-block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect2.png" alt=""> <img class="article-collect-img article-heard-img collect-status isactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive2.png" alt=""> <span class="name">收藏</span> <span class="get-collection"> 2 </span> </a> 
+            <div class="read-count-box is-like" data-type="top"> 
+             <img class="article-read-img article-heard-img" style="display:none" id="is-like-imgactive-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Active.png" alt=""> 
+             <img class="article-read-img article-heard-img" style="display:block" id="is-like-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Black.png" alt=""> 
+             <span class="read-count" id="blog-digg-num">点赞数 1 </span> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="blog-tags-box"> 
+          <div class="tags-box artic-tag-box"> 
+           <span class="label">分类专栏：</span> 
+           <a class="tag-link" href="https://blog.csdn.net/misayaaaaa/category_12036814.html" target="_blank" rel="noopener">华为OD机试（C++）真题（E+A+B+C+D卷）</a> 
+           <span class="label">文章标签：</span> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;c++&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;c++\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;c++&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;c++\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=c%2B%2B&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">c++</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;开发语言&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;开发语言\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;开发语言&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;开发语言\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E5%BC%80%E5%8F%91%E8%AF%AD%E8%A8%80&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">开发语言</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;算法&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;算法\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;算法&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;算法\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E7%AE%97%E6%B3%95&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">算法</a> 
+           <a rel="noopener" data-report-query="spm=1001.2101.3001.4223" data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;华为od&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;华为od\&quot;}&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;华为od&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;华为od\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E5%8D%8E%E4%B8%BAod&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=&amp;from_tracking_code=tag_word&amp;from_code=app_blog_art" target="_blank">华为od</a> 
+          </div> 
+         </div> 
+         <div class="up-time">
+          <span>于&nbsp;2023-06-03 17:11:08&nbsp;首次发布</span>
+         </div> 
+         <div class="slide-content-box"> 
+          <div class="article-copyright"> 
+           <div class="creativecommons">
+             版权声明：本文为博主原创文章，遵循
+            <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"> CC 4.0 BY-SA </a>版权协议，转载请附上原文出处链接和本声明。 
+           </div> 
+           <div class="article-source-link">
+             本文链接：
+            <a href="https://blog.csdn.net/misayaaaaa/article/details/131023424" target="_blank">https://blog.csdn.net/misayaaaaa/article/details/131023424</a> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="operating"> 
+          <a class="href-article-edit slide-toggle">版权</a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div id="blogHuaweiyunAdvert"></div> 
+      <div id="blogColumnPayAdvert"> 
+       <div class="column-group"> 
+        <div class="column-group-item column-group0 column-group-item-one"> 
+         <div class="item-l"> 
+          <a class="item-target" href="https://blog.csdn.net/misayaaaaa/category_12036814.html" target="_blank" title="华为OD机试（C++）真题（E+A+B+C+D卷）" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6332&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6332&quot;}"> <img class="item-target" src="https://i-blog.csdnimg.cn/columns/default/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_224,w_224" alt=""> <span class="title item-target"> <span> <span class="tit">华为OD机试（C++）真题（E+A+B+C+D卷）</span> <span class="dec">专栏收录该内容</span> </span> <span class="rank"><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/columnHotIcon2.png" alt="">该专栏为热销专栏榜&nbsp;第83名</span> </span> </a> 
+         </div> 
+         <div class="item-m"> 
+          <span>508 篇文章</span> 
+          <span class="old-add-new-box"> <span class="price">¥79.90</span> <span class="oldprice">¥99.00</span> </span> 
+         </div> 
+         <div class="item-r"> 
+          <a class="item-target article-column-subscribe">已订阅 </a> 
+          <a class="item-target column-studyvip-discount column-studyvip-pass" data-report-view="{&quot;spm&quot;:&quot;1001.2015.3001.8590&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2015.3001.8590&quot;}">8折续费 </a> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="learning_the_member_box"> 
+       <a href="https://www.csdn.net/vip?utm_source=bkzl_cjhy_ckqy" target="_blank"> 
+        <div class="left">
+         <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/iconVIpCrown.png" alt="">
+         <span>您已是超级会员，正在免费阅读会员专享内容</span>
+        </div> 
+        <div class="right">
+         <span>查看更多超级会员权益</span>
+         <img src="https://csdnimg.cn/release/blogv2/dist/components/img/vipIconArrowLeftWhite.png" alt="">
+        </div> </a> 
+      </div> 
+      <div class="ai-abstract-box"> 
+       <div class="ai-abstract"> 
+        <div class="abstract-content"> 
+         <img class="lock-img" src="https://img-home.csdnimg.cn/images/20240711042549.png" alt=""> 这篇博客介绍如何使用C++模拟实现华为OD考试中的消息队列问题，涉及发布者、消费者、消息发送与订阅的逻辑。文章提供了解题思路及代码实现，并给出了时间与空间限制以及支持的语言环境。 
+        </div> 
+        <p> 摘要生成于 <a href="https://ai.csdn.net?utm_source=cknow_pc_ai_abstract" data-report-query="spm=3001.10128" data-report-view="{&quot;spm&quot;:&quot;3001.10128&quot;,&quot;extra&quot;:{&quot;location&quot;:&quot;ai_abstract&quot;}}" data-report-click="{&quot;spm&quot;:&quot;3001.10128&quot;,&quot;extra&quot;:{&quot;location&quot;:&quot;ai_abstract&quot;,&quot;text&quot;:&quot;C知道&quot;}}" target="_blank"> C知道</a> ，由 DeepSeek-R1 满血版支持， <a href="https://ai.csdn.net?utm_source=cknow_pc_ai_abstract" data-report-query="spm=3001.10128" data-report-click="{&quot;spm&quot;:&quot;3001.10128&quot;,&quot;extra&quot;:{&quot;location&quot;:&quot;ai_abstract&quot;,&quot;text&quot;:&quot;前往体验&quot;}}" target="_blank"> 前往体验 &gt;</a></p> 
+       </div> 
+      </div> 
+      <article class="baidu_pl"> 
+       <div id="article_content" class="article_content clearfix"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/kdoc_html_views-1a98987dfd.css"> 
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-704d5b9767.css"> 
+        <div id="content_views" class="htmledit_views"> 
+         <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所有题目均有五种语言实现。<strong><strong><strong><a href="https://renjie.blog.csdn.net/article/details/129190260" rel="nofollow" title="C实现目录">C实现目录</a></strong></strong></strong>、<strong><strong><strong><a href="https://blog.csdn.net/misayaaaaa/category_12036814.html" title="C++ 实现目录">C++ 实现目录</a></strong></strong></strong>、<strong><strong><strong><a href="https://blog.csdn.net/misayaaaaa/category_12111005.html" title="Python实现目录">Python实现目录</a></strong></strong></strong>、<strong><strong><strong><a href="https://blog.csdn.net/misayaaaaa/category_12111006.html" title="Java实现目录">Java实现目录</a></strong></strong></strong>、<strong><strong><strong><a href="https://blog.csdn.net/misayaaaaa/category_12199270.html" title="JavaScript实现目录">JavaScript实现目录</a></strong></strong></strong></strong></p> 
+         <h2 id="%E9%A2%98%E7%9B%AE">题目</h2> 
+         <blockquote> 
+          <p>让我们来模拟一个消息队列的运作，有一个发布者和若干消费者，发布者会在给定的时刻向消息队列发送消息若此时消息队列有消费者订阅，<strong>这个消息会被发送到订阅的消费者中优先级最高(输入中消费者按优先级升序排列)的一个</strong>。</p> 
+          <p>若此时没有订阅的消费者，该消息被消息队列丢弃。消费者则会在给定的时刻订阅消息队列或取消订阅。当消息发送和订阅发生在同一时刻时，先处理订阅操作，即同一时刻订阅的消费者成为消息发送的候选。.当消息发送和取消订阅发生在同一时刻时，先处理取消订阅操作，即消息不会被发送到同一时刻取消订阅的消费者<br><strong>输入描述</strong><br> 输入为两行<br> 第一行为2N个正整数，代表发布者发送的N个消息的时刻和内容为方便解折，消息内容也用正整数表示)。第一个数字是第一人消息的发送时刻，第二个数字是第一个消息的内容，以此类推。用例保证发送时刻不会重复，但注意消息并没有按照发送时刻排列。<br> 第二行为2M个正整数，代表M个消费者订阅和取消订阅的时刻。第一个数字是第一个消费者订阅的时刻，第二个数字是第一人消费者取消订阅的时刻，以此类推。用例保证每个消费者的取消订阅时刻大于订阅时刻，消费者按优先级 升序排列<br> 两行的数字都由空格分隔。N不超过100，M不超过10，每行的长度不超过1000字符.</p> 
+          <p><strong>输出描述</strong><br> 输出为M行，依次为M个消费者收到的消息内容，消息内容按收到的顺序排列，且由空格分隔:若某个消费者没有收到任何消息，则对应的行输出-1.<br><strong>示例1：<br> 输入</strong></p> 
+          <p>2 22 1 11 4 44 5 55 3 33<br> 1 7 2 3<br> 输出<br> 11 33 44 55</p> 
+          <p>22<br> 说明</p> 
+          <p>消息11在1时刻到达，此时只有第一个消费者订阅，消息发送给它，<br> 消息22在2时刻到达，此时两人消费者都订阅了，消息发送给优先级最高的第二个消费者:<br> 消息33在时刻3到达，此时只有第一个消费者订阅，消息发送给它;<br> 余下的消息按规则也是发送给第一个消费者</p> 
+          <p><strong>示例2：<br> 输入</strong><br> 5 64 11 64 9 97<br> 9 11 4 9</p> 
+          <p>输出<br> 97<br> 64</p> 
+          <p>说明<br> 消息64在5时刻到达，此时只有第二个消费者订阅，消息发送给它<br> 消息97在9时刻到达，此时只有第一消费者订阅(因为第二个消费者刚好在9时刻取消订阅)，消息发送给它.11时刻也到达了一个内容为64的消息，不过因为没有消费者订阅，消息被丢弃</p> 
+         </blockquote> 
+         <p></p> 
+         <h2 id="%E6%80%9D%E8%B7%AF">思路</h2> 
+         <blockquote> 
+          <p>1：逻辑分析题目，首先将消费者和发布者的信息存储下来。</p> 
+          <p>2：核心的判定就是消息的发出时间是否和消费时间相吻合，如果符合，则被第一个消费者拿走。</p> 
+         </blockquote> 
+         <h2 id="Code">Code</h2> 
+         <pre><code  style="height: 50vh;" class="language-cpp">#include&lt;iostream&gt;
+#include&lt;vector&gt;
+#include&lt;stdlib.h&gt;
+#include&lt;algorithm&gt;
+#include&lt;string.h&gt;
+#include&lt;exception&gt; 
+#include&lt;map&gt;
+#include&lt;sstream&gt;
+#include&lt;cmath&gt;
+#include&lt;unordered_map&gt;
+#include&lt;numeric&gt;
+#include&lt;set&gt;
+#include&lt;climits&gt;
+#include&lt;ctype.h&gt;
+#include&lt;queue&gt;
+#include&lt;stack&gt;
+#include&lt;list&gt;
+#include&lt;bitset&gt;
+using namespace std;
+ 
+vector&lt;int&gt; split(string params_str) {
+    vector&lt;int&gt; p;
+    while (params_str.find(" ") != string::npos) {
+        int found = params_str.find(" ");
+        p.push_back(stoi(params_str.substr(0, found)));
+        params_str = params_str.substr(found + 1);
+    }    
+    p.push_back(stoi(params_str));
+    return p;
+} 
+ 
+vector&lt;string&gt; split_str(string params_str) {
+    vector&lt;string&gt; p;
+    while (params_str.find(" ") != string::npos) {
+        int found = params_str.find(" ");
+        p.push_back(params_str.substr(0, found));
+        params_str = params_str.substr(found + 1);
+    }    
+    p.push_back(params_str);
+    return p;
+}
+
+
+int main(){
+    string input1;
+    getline(cin, input1);
+    vector&lt;int&gt; producers = split(input1);
+    string input2;
+    getline(cin, input2);
+    vector&lt;int&gt; consumers =split(input2);
+    
+    int n = producers.size();
+    int m = consumers.size();
+
+    // 将发布者的信息存储到二维数组中
+    vector&lt;vector&lt;int&gt;&gt; producer_map(n / 2, vector&lt;int&gt;(2));
+    for (int i = 0, k = 0; i &lt; n; i += 2) {
+        producer_map[k++] = {producers[i], producers[i + 1]};
+    }
+
+    // 将订阅者的信息存储到二维数组中
+    vector&lt;vector&lt;int&gt;&gt; consumer_map(m / 2, vector&lt;int&gt;(2));
+    for (int j = 0, k = 0; j &lt; m; j += 2) {
+        consumer_map[k++] = {consumers[j], consumers[j + 1]};
+    }
+
+    // 将发布者的信息按照时间升序排序
+    sort(producer_map.begin(), producer_map.end(), [](const vector&lt;int&gt;&amp; p1, const vector&lt;int&gt;&amp; p2) {
+        return p1[0] &lt; p2[0];
+    });
+
+    // 用一个列表存储每个订阅者收到的消息
+    vector&lt;vector&lt;int&gt;&gt; relation_map(consumer_map.size());
+
+    // 处理每个发布者发送的消息
+    for (const auto&amp; pub : producer_map) {
+        int pubTime = pub[0];
+        int pubContent = pub[1];
+
+        // 从优先级最高的订阅者开始遍历
+        for (int j = consumer_map.size() - 1; j &gt;= 0; j--) {
+        int subTime = consumer_map[j][0];
+        int unsubscribeTime = consumer_map[j][1];
+
+        // 如果该订阅者在消息发布时已经订阅但未取消订阅，则将消息发送给该订阅者
+        if (pubTime &gt;= subTime &amp;&amp; pubTime &lt; unsubscribeTime) {
+            relation_map[j].push_back(pubContent);
+            break;
+        }
+        }
+    }
+
+    // 输出每个订阅者收到的消息
+    for (const auto&amp; subscriberContent : relation_map) {
+        if (subscriberContent.empty()) {
+        cout &lt;&lt; "-1" &lt;&lt; endl;
+        } else {
+        for (int i = 0; i &lt; subscriberContent.size(); i++) {
+            cout &lt;&lt; subscriberContent[i];
+            if (i != subscriberContent.size() - 1) {
+            cout &lt;&lt; " ";
+            }
+        }
+        cout &lt;&lt; endl;
+        }
+    }
+
+    return 0;
+}</code ></pre> 
+         <h3>要求</h3> 
+         <blockquote> 
+          <p>时间限制：C/C++ 1秒，其他语言 2秒</p> 
+          <p>空间限制：C/C++262144K，其他语言524288K</p> 
+          <p>64bit IO Format：%lld</p> 
+          <p>语言限定：<br> C（clang11）, C++（clang++11）, Pascal（fpc 3.0.2）, Java（javac 1.8）, Python2（2.7.3）,&nbsp;<br> PHP(7.4.7), C#(mcs5.4), ObjC(gcc 5.4), Pythen3(3.9), JavaScript Node(12.18.2), JavaScript V8(6.0.0),<br> Sqlite(3.7.9), R(4.0.3), Go(1.14.4), Ruby(2.7.1), Swift(5.3), matlab(Octave 5.2), Pypy2(pypy2.7.13),<br> Pypy3(pypy3.6.1), Rust(1.44), Scala(2.11.12), Kotlin(1.4.10), Groovy(3.0.6), TypeScript(4.1.2), Mysql(8.0)</p> 
+         </blockquote> 
+        </div> 
+       </div> 
+       <div id="blogExtensionBox" style="width:400px;margin:auto;margin-top:12px" class="blog-extension-box"></div> 
+      </article>  
+     </div> 
+     <div class="directory-boxshadow-dialog" style="display:none;"> 
+      <div class="directory-boxshadow-dialog-box"> 
+      </div> 
+      <div class="vip-limited-time-offer-box-new" id="vip-limited-time-offer-box-new"> 
+       <img class="limited-img limited-img-new" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-newWhite.png"> 
+       <div class="vip-limited-time-top">
+         确定要放弃本次机会？ 
+       </div> 
+       <span class="vip-limited-time-text">福利倒计时</span> 
+       <div class="limited-time-box-new"> 
+        <span class="time-hour"></span> 
+        <i>:</i> 
+        <span class="time-minite"></span> 
+        <i>:</i> 
+        <span class="time-second"></span> 
+       </div> 
+       <div class="limited-time-vip-box"> 
+        <p> <img class="coupon-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-roup.png"> <span class="def">立减 ¥</span> <span class="active limited-num"></span> </p> 
+        <span class="">普通VIP年卡可用</span> 
+       </div> 
+       <a class="limited-time-btn-new" href="https://mall.csdn.net/vip" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.9621&quot;}" data-report-query="spm=1001.2101.3001.9621">立即使用</a> 
+      </div> 
+     </div> 
+     <div class="more-toolbox-new more-toolbar" id="toolBarBox"> 
+      <div class="left-toolbox"> 
+       <div class="toolbox-left"> 
+        <div class="profile-box"> 
+         <a class="profile-href" target="_blank" href="https://renjie.blog.csdn.net"><img class="profile-img" src="https://profile-avatar.csdnimg.cn/4919c662b07947938ddc99c050d86c8f_misayaaaaa.jpg!1"> <span class="profile-name"> MISAYAONE </span> </a> 
+        </div> 
+        <div class="profile-attend"> 
+         <a class="tool-attend tool-bt-button tool-unbt-attend" href="javascript:;" data-report-view="{&quot;mod&quot;:&quot;1592215036_002&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;extend1&quot;:&quot;已关注&quot;}">已关注</a> 
+         <a class="tool-item-follow active-animation" style="display:none;">关注</a> 
+        </div> 
+       </div> 
+       <div class="toolbox-middle"> 
+        <ul class="toolbox-list"> 
+         <li class="tool-item tool-item-size tool-active is-like" id="is-like" data-type="bottom"> <a class="tool-item-href"> <img style="display:none;" id="is-like-imgactive-animation-like" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUpactive.png" alt=""> <img class="isactive" style="display:none" id="is-like-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like-active.png" alt=""> <img class="isdefault" style="display:block" id="is-like-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like.png" alt=""> <span id="spanCount" class="count "> 1 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">点赞</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-unlike" id="is-unlike"> <a class="tool-item-href"> <img class="isactive" style="margin-right:0px;display:none" id="is-unlike-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike-active.png" alt=""> <img class="isdefault" style="margin-right:0px;display:block" id="is-unlike-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike.png" alt=""> <span id="unlikeCount" class="count "></span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">踩</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-collection "> <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_824&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4130&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img style="display:none" id="is-collection-img-collection" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect-active.png" alt=""> <img class="isdefault" id="is-collection-img" style="display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect.png" alt=""> <img class="isactive" id="is-collection-imgactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectActive.png" alt=""> <span class="count get-collection " data-num="2" id="get-collection"> 2 </span> </a> 
+          <div class="tool-hover-tip collect"> 
+           <div class="collect-operate-box"> 
+            <span class="collect-text" id="is-collection"> 收藏 </span> 
+           </div> 
+          </div> 
+          <div class="tool-active-list"> 
+           <div class="text">
+             觉得还不错? 
+            <span class="collect-text" id="tool-active-list-collection"> 一键收藏 </span> 
+            <img id="tool-active-list-close" src="https://csdnimg.cn/release/blogv2/dist/pc/img/collectionCloseWhite.png" alt=""> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-item-comment"> 
+          <div class="guide-rr-first"> 
+           <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward01.png" alt=""> 
+           <button class="btn-guide-known">知道了</button> 
+          </div> <a class="tool-item-href go-side-comment" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.7009&quot;}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/comment.png" alt=""> <span class="count"> 1 </span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">评论</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-QRcode" data-type="article" id="tool-share"> <a class="tool-item-href" href="javascript:;" data-report-view="{&quot;spm&quot;:&quot;3001.4129&quot;,&quot;extra&quot;:{&quot;type&quot;:&quot;blogdetail&quot;}}"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/share.png" alt=""> <span class="count">分享</span> </a> 
+          <div class="QRcode" id="tool-QRcode"> 
+           <div class="share-bg-box"> 
+            <div class="share-content"> 
+             <a id="copyPosterUrl" data-type="link" class="btn-share">复制链接</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="qq">分享到 QQ</a> 
+            </div> 
+            <div class="share-content"> 
+             <a class="btn-share" data-type="weibo">分享到新浪微博</a> 
+            </div> 
+            <div class="share-code"> 
+             <div class="share-code-box" id="shareCode"></div> 
+             <div class="share-code-text"> 
+              <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/share/icon-wechat.png" alt="">扫一扫 
+             </div> 
+            </div> 
+           </div> 
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active tool-item-reward"> <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_830&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4237&quot;,&quot;dest&quot;:&quot;&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img class="isdefault reward-bt" id="rewardBtNew" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/reward.png" alt="打赏"> <span class="count">打赏</span> </a> 
+          <div class="tool-hover-tip">
+           <span class="text space">打赏</span>
+          </div> </li> 
+         <li class="tool-item tool-item-size tool-active is-more" id="is-more"> <a class="tool-item-href"> <img class="isdefault" style="margin-right:0px;display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/more.png" alt=""> <span class="count"></span> </a> 
+          <div class="more-opt-box"> 
+           <div class="mini-box"> 
+            <a class="tool-item-href" id="rewardBtNewHide" data-report-click="{&quot;spm&quot;:&quot;3001.4237&quot;,&quot;extra&quot;:&quot;{\&quot;type\&quot;:\&quot;hide\&quot;}&quot;}"> <img class="isdefault reward-bt" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/reward.png" alt="打赏"> <span class="count">打赏</span> </a> 
+            <a class="tool-item-href" id="toolReportBtnHide"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" alt=""> <span class="count">举报</span> </a> 
+           </div> 
+           <div class="normal-box"> 
+            <a class="tool-item-href" id="toolReportBtnHideNormal"> <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" alt=""> <span class="count">举报</span> </a> 
+           </div> 
+          </div> </li> 
+        </ul> 
+       </div> 
+       <div class="toolbox-right"> 
+        <div class="tool-directory"> 
+         <a class="bt-columnlist-show" data-id="12036814" data-free="false" data-description="2024全网最新最全题库、包含华为OD机试真题（E+A+B+C+D卷），已帮助 4000+小伙伴顺利通过机试。每篇文章都有完整的算法思路+代码。" data-subscribe="true" data-title="华为OD机试（C++）真题（E+A+B+C+D卷）" data-img="https://i-blog.csdnimg.cn/columns/default/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_224,w_224" data-url="https://blog.csdn.net/misayaaaaa/category_12036814.html" data-sum="508" data-people="1520" data-price="79.90" data-hotrank="83" data-status="true" data-oldprice="99.00" data-join="true" data-studyvip="true" data-studysubscribe="true" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}">专栏目录</a> 
+        </div> 
+        <div class="tool-column"> 
+         <a class="tool-bt-button tool-unbt-subscribe" href="javascript:;" data-report-view="{&quot;mod&quot;:&quot;1592215036_001&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4405&quot;,&quot;extend1&quot;:&quot;已订阅&quot;}" data-report-click="{&quot;mod&quot;:&quot;1592215036_001&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4405&quot;,&quot;extend1&quot;:&quot;已订阅&quot;}">已订阅</a> 
+        </div> 
+       </div> 
+      </div> 
+     </div>   
+     <a id="commentBox" name="commentBox"></a> 
+     <div id="pcCommentBox" class="comment-box comment-box-new2 login-comment-box-new" style="display:none"> 
+      <div class="has-comment" style="display:block"> 
+       <div class="one-line-box"> 
+        <div class="has-comment-tit go-side-comment"> 
+         <span class="count">1</span>&nbsp;条评论 
+        </div> 
+        <div class="has-comment-con comment-operate-item"></div> 
+        <a class="has-comment-bt-right go-side-comment focus">写评论</a> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="first-recommend-box recommend-box recommend-highlight-default"> 
+      <div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/banxia_frontend/article/details/131097948" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6661.1&quot;,&quot;mod&quot;:&quot;popu_871&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant_t0.none-task-blog-2~default~OPENSEARCH~Rate-1-131097948-blog-131023424.235^v43^pc_blog_bottom_relevance_base5\&quot;,\&quot;dist_request_id\&quot;:\&quot;1745656139584_69936\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1745656139584_69936&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~OPENSEARCH~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/banxia_frontend/article/details/131097948&quot;}"> 
+       <div class="content-box"> 
+        <div class="content-blog display-flex"> 
+         <div class="title-box"> 
+          <span class="type"> <img src="https://csdnimg.cn/release/blogv2/dist/components/img/blogType.png" alt=""> <span class="tip">博客</span> </span> 
+          <a href="https://blog.csdn.net/banxia_frontend/article/details/131097948" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6661.1&quot;,&quot;mod&quot;:&quot;popu_871&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant_t0.none-task-blog-2~default~OPENSEARCH~Rate-1-131097948-blog-131023424.235^v43^pc_blog_bottom_relevance_base5\&quot;,\&quot;dist_request_id\&quot;:\&quot;1745656139584_69936\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1745656139584_69936&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~OPENSEARCH~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/banxia_frontend/article/details/131097948&quot;}" data-report-query="spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-131097948-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-131097948-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5"> 
+           <div class="left ellipsis-online ellipsis-online-1">
+            <em>华为</em>
+            <em>OD</em>
+            <em>统一</em>
+            <em>考试</em> - 
+            <em>模拟</em>
+            <em>消息队列</em>（
+            <em>C++</em> Java JavaScript Python）
+           </div> </a> 
+         </div> 
+         <div class="info-box display-flex"> 
+          <div class="info"> 
+           <a href="https://blog.csdn.net/banxia_frontend" target="_blank"><span class="blog-title">算法大师！</span></a> 
+          </div> 
+          <div class="info display-flex"> 
+           <span class="info-block time">06-07</span> 
+           <span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> 3253 </span> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="desc-box"> 
+         <a href="https://blog.csdn.net/banxia_frontend/article/details/131097948" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6661.1&quot;,&quot;mod&quot;:&quot;popu_871&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant_t0.none-task-blog-2~default~OPENSEARCH~Rate-1-131097948-blog-131023424.235^v43^pc_blog_bottom_relevance_base5\&quot;,\&quot;dist_request_id\&quot;:\&quot;1745656139584_69936\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1745656139584_69936&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~OPENSEARCH~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/banxia_frontend/article/details/131097948&quot;}" data-report-query="spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-131097948-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-131097948-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5"> 
+          <div class="desc ellipsis-online ellipsis-online-1">
+           让我们来
+           <em>模拟</em>一个
+           <em>消息队列</em>的运作，有一个发布者和若干消费者，发布者会在给定的时刻向
+           <em>消息队列</em>发送消息， 
+          </div> </a> 
+        </div> 
+       </div> 
+      </div> 
+     </div>  
+     <div class="second-recommend-box recommend-box recommend-highlight-default"> 
+      <div class="recommend-item-box type_blog clearfix" data-url="https://renjie.blog.csdn.net/article/details/131109535" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.1&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-1-131109535-blog-131023424.235^v43^pc_blog_bottom_relevance_base5\&quot;,\&quot;dist_request_id\&quot;:\&quot;1745656139584_69936\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1745656139584_69936&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~OPENSEARCH~Rate&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/131109535&quot;}"> 
+       <div class="content-box"> 
+        <div class="content-blog display-flex"> 
+         <div class="title-box"> 
+          <span class="type"> <img src="https://csdnimg.cn/release/blogv2/dist/components/img/blogType.png" alt=""> <span class="tip">博客</span> </span> 
+          <a href="https://renjie.blog.csdn.net/article/details/131109535" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.1&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-1-131109535-blog-131023424.235^v43^pc_blog_bottom_relevance_base5\&quot;,\&quot;dist_request_id\&quot;:\&quot;1745656139584_69936\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1745656139584_69936&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~OPENSEARCH~Rate&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/131109535&quot;}" data-report-query="spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-131109535-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-131109535-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5"> 
+           <div class="left ellipsis-online ellipsis-online-1">
+            2023
+            <em>华为</em>
+            <em>od</em>
+            <em>统一</em>
+            <em>考试</em>B
+            <em>卷</em>【
+            <em>模拟</em>
+            <em>消息队列</em>】JavaScript 
+            <em>实现</em>
+           </div> </a> 
+         </div> 
+         <div class="info-box display-flex"> 
+          <div class="info"> 
+           <a href="https://blog.csdn.net/misayaaaaa" target="_blank"><span class="blog-title">MISAYAONE的博客</span></a> 
+          </div> 
+          <div class="info display-flex"> 
+           <span class="info-block time">06-10</span> 
+           <span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> 1560 </span> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="desc-box"> 
+         <a href="https://renjie.blog.csdn.net/article/details/131109535" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.1&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-1-131109535-blog-131023424.235^v43^pc_blog_bottom_relevance_base5\&quot;,\&quot;dist_request_id\&quot;:\&quot;1745656139584_69936\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1745656139584_69936&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~OPENSEARCH~Rate&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/131109535&quot;}" data-report-query="spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-131109535-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-1-131109535-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5"> 
+          <div class="desc ellipsis-online ellipsis-online-1">
+           让我们来
+           <em>模拟</em>一个
+           <em>消息队列</em>的运作，有一个发布者和若干消费者，发布者会在给定的时刻向
+           <em>消息队列</em>发送消息若此时
+           <em>消息队列</em>有消费者订阅，这个消息会被发送到订阅的消费者中优先级最高(输入中消费者按优先级升序排列)的一个。 若此时没有订阅的消费者，该消息被
+           <em>消息队列</em>丢弃。消费者则会在给定的时刻订阅
+           <em>消息队列</em>或取消订阅。当消息发送和订阅发生在同一时刻时，先处理订阅操作，即同一时刻订阅的消费者成为消息发送的候选。.当消息发送和取消订阅发生在同一时刻时，先处理取消订阅操作，即消息不会被发送到同一时刻取消订阅的消费者
+          </div> </a> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="recommend-box insert-baidu-box  recommend-highlight-default"> 
+      <div class="recommend-item-box no-index" style="display:none"></div> 
+      <div class="recommend-item-box type_blog clearfix" data-url="https://renjie.blog.csdn.net/article/details/130957179" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.2&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-2-130957179-blog-131023424.235^v43^pc_blog_bottom_relevance_base5\&quot;,\&quot;dist_request_id\&quot;:\&quot;1745656139584_69936\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1745656139584_69936&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;2&quot;,&quot;strategy&quot;:&quot;2~default~OPENSEARCH~Rate&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/130957179&quot;}"> 
+       <div class="content-box"> 
+        <div class="content-blog display-flex"> 
+         <div class="title-box"> 
+          <span class="type"> <img src="https://csdnimg.cn/release/blogv2/dist/components/img/blogType.png" alt=""> <span class="tip">博客</span> </span> 
+          <a href="https://renjie.blog.csdn.net/article/details/130957179" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.2&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-2-130957179-blog-131023424.235^v43^pc_blog_bottom_relevance_base5\&quot;,\&quot;dist_request_id\&quot;:\&quot;1745656139584_69936\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1745656139584_69936&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;2&quot;,&quot;strategy&quot;:&quot;2~default~OPENSEARCH~Rate&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/130957179&quot;}" data-report-query="spm=1001.2101.3001.6650.2&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-2-130957179-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-2-130957179-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5"> 
+           <div class="left ellipsis-online ellipsis-online-1">
+            2023
+            <em>华为</em>
+            <em>od</em>机试真题B
+            <em>卷</em>【
+            <em>模拟</em>
+            <em>消息队列</em>】Java 
+            <em>实现</em>
+           </div> </a> 
+         </div> 
+         <div class="info-box display-flex"> 
+          <div class="info"> 
+           <a href="https://blog.csdn.net/misayaaaaa" target="_blank"><span class="blog-title">MISAYAONE的博客</span></a> 
+          </div> 
+          <div class="info display-flex"> 
+           <span class="info-block time">05-30</span> 
+           <span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> 7975 </span> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="desc-box"> 
+         <a href="https://renjie.blog.csdn.net/article/details/130957179" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.2&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-2-130957179-blog-131023424.235^v43^pc_blog_bottom_relevance_base5\&quot;,\&quot;dist_request_id\&quot;:\&quot;1745656139584_69936\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1745656139584_69936&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;2&quot;,&quot;strategy&quot;:&quot;2~default~OPENSEARCH~Rate&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/130957179&quot;}" data-report-query="spm=1001.2101.3001.6650.2&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-2-130957179-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-2-130957179-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5"> 
+          <div class="desc ellipsis-online ellipsis-online-1">
+           让我们来
+           <em>模拟</em>一个
+           <em>消息队列</em>的运作，有一个发布者和若干消费者，发布者会在给定的时刻向
+           <em>消息队列</em>发送消息若此时
+           <em>消息队列</em>有消费者订阅，这个消息会被发送到订阅的消费者中优先级最高(输入中消费者按优先级升序排列)的一个。 若此时没有订阅的消费者，该消息被
+           <em>消息队列</em>丢弃。消费者则会在给定的时刻订阅
+           <em>消息队列</em>或取消订阅。当消息发送和订阅发生在同一时刻时，先处理订阅操作，即同一时刻订阅的消费者成为消息发送的候选。.当消息发送和取消订阅发生在同一时刻时，先处理取消订阅操作，即消息不会被发送到同一时刻取消订阅的消费者
+          </div> </a> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/guorui_java/article/details/131721788" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.3&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-3-131721788-blog-131023424.235^v43^pc_blog_bottom_relevance_base5\&quot;,\&quot;dist_request_id\&quot;:\&quot;1745656139584_69936\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1745656139584_69936&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;3&quot;,&quot;strategy&quot;:&quot;2~default~OPENSEARCH~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/guorui_java/article/details/131721788&quot;}"> 
+       <div class="content-box"> 
+        <div class="content-blog display-flex"> 
+         <div class="title-box"> 
+          <span class="type"> <img src="https://csdnimg.cn/release/blogv2/dist/components/img/blogType.png" alt=""> <span class="tip">博客</span> </span> 
+          <a href="https://blog.csdn.net/guorui_java/article/details/131721788" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.3&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-3-131721788-blog-131023424.235^v43^pc_blog_bottom_relevance_base5\&quot;,\&quot;dist_request_id\&quot;:\&quot;1745656139584_69936\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1745656139584_69936&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;3&quot;,&quot;strategy&quot;:&quot;2~default~OPENSEARCH~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/guorui_java/article/details/131721788&quot;}" data-report-query="spm=1001.2101.3001.6650.3&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-3-131721788-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-3-131721788-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5"> 
+           <div class="left ellipsis-online ellipsis-online-1">
+            <em>华为</em>
+            <em>OD</em>机试2025A
+            <em>卷</em>
+            <em>统一</em>
+            <em>考试</em>题库清单（持续收录中）以及考点说明
+           </div> 
+           <div class="tag">
+            热门推荐
+           </div> </a> 
+         </div> 
+         <div class="info-box display-flex"> 
+          <div class="info"> 
+           <a href="https://blog.csdn.net/guorui_java" target="_blank"><span class="blog-title">学Java，找哪吒</span></a> 
+          </div> 
+          <div class="info display-flex"> 
+           <span class="info-block time">07-14</span> 
+           <span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> 5万+ </span> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="desc-box"> 
+         <a href="https://blog.csdn.net/guorui_java/article/details/131721788" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.3&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-3-131721788-blog-131023424.235^v43^pc_blog_bottom_relevance_base5\&quot;,\&quot;dist_request_id\&quot;:\&quot;1745656139584_69936\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1745656139584_69936&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;3&quot;,&quot;strategy&quot;:&quot;2~default~OPENSEARCH~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/guorui_java/article/details/131721788&quot;}" data-report-query="spm=1001.2101.3001.6650.3&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-3-131721788-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-3-131721788-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5"> 
+          <div class="desc ellipsis-online ellipsis-online-1">
+           每一题都有详细的答题思路、详细的代码注释、样例测试，发现新题目，随时更新，全天CSDN在线答疑。
+          </div> </a> 
+        </div> 
+       </div> 
+      </div> 
+      <dl id="recommend-item-box-tow" class="recommend-item-box type_blog clearfix"> 
+      </dl> 
+      <div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/m0_57781768/article/details/142907487" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.4&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-4-142907487-blog-131023424.235^v43^pc_blog_bottom_relevance_base5\&quot;,\&quot;dist_request_id\&quot;:\&quot;1745656139584_69936\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1745656139584_69936&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;4&quot;,&quot;strategy&quot;:&quot;2~default~OPENSEARCH~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/m0_57781768/article/details/142907487&quot;}"> 
+       <div class="content-box"> 
+        <div class="content-blog display-flex"> 
+         <div class="title-box"> 
+          <span class="type"> <img src="https://csdnimg.cn/release/blogv2/dist/components/img/blogType.png" alt=""> <span class="tip">博客</span> </span> 
+          <a href="https://blog.csdn.net/m0_57781768/article/details/142907487" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.4&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-4-142907487-blog-131023424.235^v43^pc_blog_bottom_relevance_base5\&quot;,\&quot;dist_request_id\&quot;:\&quot;1745656139584_69936\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1745656139584_69936&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;4&quot;,&quot;strategy&quot;:&quot;2~default~OPENSEARCH~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/m0_57781768/article/details/142907487&quot;}" data-report-query="spm=1001.2101.3001.6650.4&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-4-142907487-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-4-142907487-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5"> 
+           <div class="left ellipsis-online ellipsis-online-1">
+            <em>华为</em>
+            <em>OD</em>机试题解——
+            <em>模拟</em>
+            <em>消息队列</em>问题的详细解析与
+            <em>C++</em>、Java、JavaScript、Python四种
+            <em>语言</em>
+            <em>实现</em>
+           </div> 
+           <div class="tag">
+            最新发布
+           </div> </a> 
+         </div> 
+         <div class="info-box display-flex"> 
+          <div class="info"> 
+           <a href="https://blog.csdn.net/m0_57781768" target="_blank"><span class="blog-title">m0_57781768的博客</span></a> 
+          </div> 
+          <div class="info display-flex"> 
+           <span class="info-block time">10-14</span> 
+           <span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> 238 </span> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="desc-box"> 
+         <a href="https://blog.csdn.net/m0_57781768/article/details/142907487" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.4&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~OPENSEARCH~Rate-4-142907487-blog-131023424.235^v43^pc_blog_bottom_relevance_base5\&quot;,\&quot;dist_request_id\&quot;:\&quot;1745656139584_69936\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1745656139584_69936&quot;,&quot;ab_strategy&quot;:&quot;vipdefault&quot;,&quot;index&quot;:&quot;4&quot;,&quot;strategy&quot;:&quot;2~default~OPENSEARCH~Rate&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/m0_57781768/article/details/142907487&quot;}" data-report-query="spm=1001.2101.3001.6650.4&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-4-142907487-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EOPENSEARCH%7ERate-4-142907487-blog-131023424.235%5Ev43%5Epc_blog_bottom_relevance_base5"> 
+          <div class="desc ellipsis-online ellipsis-online-1">
+           在
+           <em>华为</em>
+           <em>OD</em>机试中，
+           <em>模拟</em>
+           <em>消息队列</em>是一个常见的考点。考生需要设计一个简单的
+           <em>消息队列</em>系统，其中有发布者发送消息，消费者根据时间进行订阅或取消订阅，消息按照优先级分配给订阅者。本篇文章将为您详细解析此问题，并提供
+           <em>C++</em>、Java、JavaScript、Python四种
+           <em>语言</em>的完整
+           <em>实现</em>。每一行代码都附带详细注释，帮助考生理解并掌握相关解题思路。
+          </div> </a> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="blog-footer-bottom" style="margin-top:10px;"></div>   
+    </main> 
+    <aside class="blog_container_aside"> 
+     <div id="asideProfile" class="aside-box active"> 
+      <div class="profile-intro d-flex"> 
+       <div class="avatar-box d-flex justify-content-center flex-column"> 
+        <a href="https://renjie.blog.csdn.net" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_379&quot;,&quot;spm&quot;:&quot;3001.4121&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img src="https://profile-avatar.csdnimg.cn/4919c662b07947938ddc99c050d86c8f_misayaaaaa.jpg!1" class="avatar_pic"> </a> 
+       </div> 
+       <div class="user-info d-flex flex-column profile-intro-name-box"> 
+        <div class="profile-intro-name-boxTop"> 
+         <a href="https://renjie.blog.csdn.net" target="_blank" class="" id="uid" title="MISAYAONE" data-report-click="{&quot;mod&quot;:&quot;popu_379&quot;,&quot;spm&quot;:&quot;3001.4122&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net&quot;,&quot;ab&quot;:&quot;new&quot;}"> <span class="name" username="misayaaaaa">MISAYAONE</span> </a> 
+        </div> 
+        <div class="profile-intro-name-boxFooter-new"> 
+         <p class="profile-intro-name-leve"> <span> 博客等级 </span> <img class="level" src="https://csdnimg.cn/identity/blog9.png"> </p> 
+         <span class="profile-intro-name-years" title="已加入 CSDN 10年">码龄10年</span> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="profile-intro-rank-information"> 
+       <dl> 
+        <a href="https://renjie.blog.csdn.net" data-report-click="{&quot;mod&quot;:&quot;1598321000_001&quot;,&quot;spm&quot;:&quot;3001.4310&quot;}" data-report-query="t=1"> 
+         <dd>
+          <span>3244</span>
+         </dd> 
+         <dt>
+          原创
+         </dt> </a> 
+       </dl> 
+       <dl title="12701"> 
+        <dd>
+         1万+
+        </dd> 
+        <dt>
+         点赞
+        </dt> 
+       </dl> 
+       <dl title="25345"> 
+        <dd>
+         2万+
+        </dd> 
+        <dt>
+         收藏
+        </dt> 
+       </dl> 
+       <dl id="fanBox" title="20001"> 
+        <dd>
+         <span id="fan">2万+</span>
+        </dd> 
+        <dt>
+         粉丝
+        </dt> 
+       </dl> 
+      </div> 
+      <div class="profile-intro-name-boxOpration"> 
+       <div class="opt-letter-watch-box"> 
+        <a class="attented personal-watch bt-button" id="btnAttent">已关注</a> 
+       </div> 
+       <div class="opt-letter-watch-box"> 
+        <a rel="noopener" class="bt-button personal-letter" href="https://im.csdn.net/chat/misayaaaaa" target="_blank">私信</a> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="swiper-slide-box-remuneration"> 
+      <a data-report-click="{&quot;spm&quot;:&quot;3001.9728&quot;,&quot;extra&quot;:{&quot;index&quot;:&quot;0&quot;}}" data-report-view="{&quot;spm&quot;:&quot;3001.9728&quot;,&quot;extra&quot;:{&quot;index&quot;:&quot;0&quot;}}" href="https://ai.csdn.net/" target="_blank"> <img src="https://i-operation.csdnimg.cn/images/2dd892a9769b4cce9c086db94eab887f.png" alt=""> </a> 
+     </div> 
+     <div id="asideHotArticle" class="aside-box"> 
+      <h3 class="aside-title">热门文章</h3> 
+      <div class="aside-content"> 
+       <ul class="hotArticle-list"> 
+        <li> <a href="https://renjie.blog.csdn.net/article/details/53786215" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;3001.4139&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/53786215&quot;,&quot;ab&quot;:&quot;new&quot;}"> C++Primer第五版——习题答案+详解(完整版) <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">336981</span> </a> </li> 
+        <li> <a href="https://renjie.blog.csdn.net/article/details/127947829" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;3001.4139&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/127947829&quot;,&quot;ab&quot;:&quot;new&quot;}"> 2025华为OD机试（JAVA）真题【E卷+A卷+B卷+C卷+D卷】目录 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">280013</span> </a> </li> 
+        <li> <a href="https://renjie.blog.csdn.net/article/details/53421221" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;3001.4139&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/53421221&quot;,&quot;ab&quot;:&quot;new&quot;}"> matlab的图像操作——输出图像尺寸大小、坐标轴等各项设置 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">240228</span> </a> </li> 
+        <li> <a href="https://renjie.blog.csdn.net/article/details/127946125" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;3001.4139&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/127946125&quot;,&quot;ab&quot;:&quot;new&quot;}"> 2025华为OD机试（Python）真题【E卷+A卷+B卷+C卷+D卷】目录 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">222133</span> </a> </li> 
+        <li> <a href="https://renjie.blog.csdn.net/article/details/53559689" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;3001.4139&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/53559689&quot;,&quot;ab&quot;:&quot;new&quot;}"> 标准论文参考文献添加方法——Zotero入门使用教程 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">203975</span> </a> </li> 
+       </ul> 
+      </div> 
+     </div> 
+     <div id="asideCategory" class="aside-box flexible-box"> 
+      <h3 class="aside-title">分类专栏</h3> 
+      <div class="aside-content"> 
+       <ul> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12111005.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12111005.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756754.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 华为OD机试（Python）真题（E+A+B+C+D卷） </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">508篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12217917.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12217917.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756754.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 华为OD机试（C语言）真题（E+A+B+C+D卷） </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">455篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12199270.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12199270.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 华为OD机试JavaScript真题 E+A+B+C+D卷 </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">505篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12258991.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12258991.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756724.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> OD机试 Py/Java/JS合集（E+A+B+C+D卷） </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">1508篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12036814.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12036814.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 华为OD机试（C++）真题（E+A+B+C+D卷） </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">508篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12111006.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12111006.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 华为OD机试（JAVA）真题（E+A+B+C+D卷） </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">521篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12304460.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12304460.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756757.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 华为OD面试手撕真题题库&amp;八股文 </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">92篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9404814.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9404814.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/fde2b7a5c05ffaa0f83e8b6be6cacc39.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> Linux 基础知识 </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">19篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9268777.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9268777.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/974bb3dc0e18bc4c3b83347853565ffa.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> Matlab工程应用 </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">16篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9268264.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9268264.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/50ebd4af1d8ce5bdece6406b1f1ca55c.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> C++疑难杂症知识点 </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">140篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9267874.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9267874.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/296b33bd1f00cc93d437a193d04bd211.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> C++Primer 第五版习题答案详解 </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">77篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6679195.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6679195.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/1c6f72e39e770a4903e164b0130c5c92.jpeg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【研究生课程总结】 </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">9篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9270323.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9270323.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/e210facf256b7bd8ef259e806cbf4b86.jpeg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 跟我一起深度探索C++对象模型 </span> </a> <span class="special-column-num">15篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9269029.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9269029.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/a02ed8a2fcbea20e0a931acb23c17a95.jpeg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 三维建模与渲染技术 </span> </a> <span class="special-column-num">22篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9267944.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9267944.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/fc88a0fbe35f4353a66eff92bedff269.jpeg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> Python实战小程序 </span> </a> <span class="special-column-num">13篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9294682.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9294682.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/7462383d1891b75adb7e937d2555033a.jpeg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 数据仓库之『浅尝』 </span> </a> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9282142.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9282142.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/9364d5725d25be64c091c0f98f20035c.jpeg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> Linux入门学习教程 </span> </a> <span class="special-column-num">23篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12325971.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12325971.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756930.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 华为OD机试（C++）真题（2022&amp;2023） </span> </a> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9378491.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9378491.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756780.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> Linux 常用命令 </span> </a> <span class="special-column-num">8篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_10906260.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_10906260.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756923.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 博文分享 </span> </a> <span class="special-column-num">90篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12015946.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12015946.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756913.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 数据仓库/数据分析 SQL 面试真题 </span> </a> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9699387.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9699387.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756780.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> MapReduce </span> </a> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9695100.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9695100.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756757.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 计算广告阅读理解 </span> </a> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9395926.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9395926.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> Sql 学习 </span> </a> <span class="special-column-num">5篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9448750.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9448750.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> Flask IP 鉴权需求 </span> </a> <span class="special-column-num">4篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9395710.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9395710.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> Shell 脚本学习 </span> </a> <span class="special-column-num">2篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9371431.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9371431.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> ES 涉及知识点 </span> </a> <span class="special-column-num">3篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9391680.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9391680.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 个人公众号 </span> </a> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6525394.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6525394.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756918.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【C++Primer习题】 </span> </a> <span class="special-column-num">78篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6506120.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6506120.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756919.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【python基础知识】 </span> </a> <span class="special-column-num">19篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6515069.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6515069.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756754.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【python实战小程序】 </span> </a> <span class="special-column-num">10篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6833062.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6833062.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【排序算法总结】 </span> </a> <span class="special-column-num">10篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6836833.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6836833.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756925.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【Google C++Style Guide】 </span> </a> <span class="special-column-num">9篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6862694.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6862694.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【牛客网学习笔记】 </span> </a> <span class="special-column-num">12篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6517020.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6517020.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756757.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【遇到的实际编程问题】 </span> </a> <span class="special-column-num">25篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6571342.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6571342.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【三维建模仿真】 </span> </a> <span class="special-column-num">18篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6505531.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6505531.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756780.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【想写就写@@】 </span> </a> <span class="special-column-num">160篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6735149.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6735149.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756754.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【C++阶段性学习总结】 </span> </a> <span class="special-column-num">2篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6918840.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6918840.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756919.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【算法小白入门】 </span> </a> <span class="special-column-num">6篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6840737.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6840737.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756925.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【数据结构】 </span> </a> <span class="special-column-num">12篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6979452.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6979452.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756757.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【操作系统】 </span> </a> <span class="special-column-num">5篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6775464.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6775464.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756919.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【Leetcode】 </span> </a> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6584687.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6584687.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756724.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【论文相关】 </span> </a> <span class="special-column-num">1篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6504233.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6504233.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756916.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【会编程的段子手】 </span> </a> <span class="special-column-num">8篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6577417.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6577417.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756916.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【观影感悟】 </span> </a> <span class="special-column-num">5篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_8827917.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_8827917.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756754.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【C++进阶教程】 </span> </a> <span class="special-column-num">15篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_7169158.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_7169158.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> ~~~~~分割线~~~~~~ </span> </a> <span class="special-column-num">3篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_8953086.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_8953086.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【PPT技巧】 </span> </a> <span class="special-column-num">3篇</span> </li> 
+        <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9258854.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9258854.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+          <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class="title oneline"> 【新人题学到的东西】 </span> </a> <span class="special-column-num">4篇</span> </li> 
+       </ul> 
+      </div> 
+      <p class="text-center"> <a class="flexible-btn" data-fbox="aside-archive"><img class="look-more" src="https://csdnimg.cn/release/blogv2/dist/pc/img/arrowDownWhite.png" alt=""></a> </p> 
+     </div> 
+     <div id="asideNewComments" class="aside-box"> 
+      <h3 class="aside-title">最新评论</h3> 
+      <div class="aside-content"> 
+       <ul class="newcomment-list"> 
+        <li> <a class="title text-truncate" target="_blank" href="https://renjie.blog.csdn.net/article/details/130786980#comments_37066511" data-report-click="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/130786980#comments_37066511&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/130786980#comments_37066511&quot;,&quot;ab&quot;:&quot;new&quot;}">华为od统一考试B卷【简易内存池】Python 实现</a> <p class="comment ellipsis"> <a href="https://renjie.blog.csdn.net" class="user-name" target="_blank">MISAYAONE: </a> <span class="code-comments">确实有问题，之前的逻辑看起来不太合理，重新实现了一把，这个问题应该是解决了~感谢指正！</span> </p> </li> 
+        <li> <a class="title text-truncate" target="_blank" href="https://renjie.blog.csdn.net/article/details/131185761#comments_37066365" data-report-click="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/131185761#comments_37066365&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/131185761#comments_37066365&quot;,&quot;ab&quot;:&quot;new&quot;}">2023华为od机试统一考试B卷【生日礼物】Java 实现</a> <p class="comment ellipsis"> <a href="https://renjie.blog.csdn.net" class="user-name" target="_blank">MISAYAONE: </a> <span class="code-comments">我研究下看看~~</span> </p> </li> 
+        <li> <a class="title text-truncate" target="_blank" href="https://renjie.blog.csdn.net/article/details/130712191#comments_37066353" data-report-click="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/130712191#comments_37066353&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/130712191#comments_37066353&quot;,&quot;ab&quot;:&quot;new&quot;}">华为od机试真题 Python 实现【跳格子游戏】</a> <p class="comment ellipsis"> <a href="https://renjie.blog.csdn.net" class="user-name" target="_blank">MISAYAONE: </a> <span class="code-comments">从拓扑排序的角度来看，需要2和1同时开启，0才能开启。</span> </p> </li> 
+        <li> <a class="title text-truncate" target="_blank" href="https://renjie.blog.csdn.net/article/details/135218315#comments_37066012" data-report-click="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/135218315#comments_37066012&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/135218315#comments_37066012&quot;,&quot;ab&quot;:&quot;new&quot;}">2023华为od机试C卷【项目排期/最少交付时间】Python 实现</a> <p class="comment ellipsis"> <a href="https://renjie.blog.csdn.net" class="user-name" target="_blank">MISAYAONE: </a> <span class="code-comments">确实有问题，high的设置应该要考虑这种特殊的情况，不过应该是要设置成total，total-sum(nums[:n-1])也不满足这种情况的。已经修正了~</span> </p> </li> 
+        <li> <a class="title text-truncate" target="_blank" href="https://renjie.blog.csdn.net/article/details/128441437#comments_37065975" data-report-click="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/128441437#comments_37065975&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;3001.4231&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/128441437#comments_37065975&quot;,&quot;ab&quot;:&quot;new&quot;}">【100%通过率】华为OD机试真题 Java 实现【水库蓄水问题】【2022.11 Q4 新题】</a> <p class="comment ellipsis"> <a href="https://renjie.blog.csdn.net" class="user-name" target="_blank">MISAYAONE: </a> <span class="code-comments">对的，思路一致，只是实现细节有所差异。</span> </p> </li> 
+       </ul> 
+      </div> 
+     </div> 
+     <div id="asideHotArticle" class="aside-box"> 
+      <h3 class="aside-title">大家在看</h3> 
+      <div class="aside-content"> 
+       <ul class="hotArticle-list"> 
+        <li> <a href="https://blog.csdn.net/Matlab912100926/article/details/147460793" target="_blank" data-report-click="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/Matlab912100926/article/details/147460793&quot;,&quot;strategy&quot;:&quot;202_1052723-2748051_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/Matlab912100926/article/details/147460793&quot;,&quot;strategy&quot;:&quot;202_1052723-2748051_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}"> 【天气】基于matlab计算并绘制 -60至90之间潮湿空气的湿度特性【含Matlab源码 9142期】 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">663</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/weixin_43143223/article/details/147517582" target="_blank" data-report-click="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_43143223/article/details/147517582&quot;,&quot;strategy&quot;:&quot;202_1052723-2748060_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_43143223/article/details/147517582&quot;,&quot;strategy&quot;:&quot;202_1052723-2748060_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}"> 芯片Latch UP测试方法 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">54</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/2401_85908133/article/details/147537262" target="_blank" data-report-click="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/2401_85908133/article/details/147537262&quot;,&quot;strategy&quot;:&quot;202_1052723-2748079_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/2401_85908133/article/details/147537262&quot;,&quot;strategy&quot;:&quot;202_1052723-2748079_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}"> Java基础：数据类型 </a> </li> 
+        <li> <a href="https://blog.csdn.net/2401_88192774/article/details/147504594" target="_blank" data-report-click="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/2401_88192774/article/details/147504594&quot;,&quot;strategy&quot;:&quot;202_1052723-2748068_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/2401_88192774/article/details/147504594&quot;,&quot;strategy&quot;:&quot;202_1052723-2748068_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}"> java毕业设计-基于springboot+vue的高校党建数字化管理系统设计和实现，基于springboot的智慧党建系统的设计和实现(源码+LW+部署文档+远程调试+代码讲解等) <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt=""> <span class="read">312</span> </a> </li> 
+        <li> <a href="https://blog.csdn.net/mobangde/article/details/147530691" target="_blank" data-report-click="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/mobangde/article/details/147530691&quot;,&quot;strategy&quot;:&quot;202_1052723-2748063_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;spm&quot;:&quot;3001.10093&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/mobangde/article/details/147530691&quot;,&quot;strategy&quot;:&quot;202_1052723-2748063_RCMD&quot;,&quot;ab&quot;:&quot;new&quot;}"> Python-pandas-DataFrame报错--FutureWarning:Could not cast to float64, falling back to object </a> </li> 
+       </ul> 
+      </div> 
+     </div> 
+     <div id="asideArchive" class="aside-box" style="display:block!important; width:300px;"> 
+      <h3 class="aside-title">最新文章</h3> 
+      <div class="aside-content"> 
+       <ul class="inf_list clearfix"> 
+        <li class="clearfix"> <a href="https://renjie.blog.csdn.net/article/details/147338956" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;spm&quot;:&quot;3001.4136&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/147338956&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/147338956&quot;,&quot;ab&quot;:&quot;new&quot;}">华为OD面经分享_Java方向. 2024.12.23</a> </li> 
+        <li class="clearfix"> <a href="https://renjie.blog.csdn.net/article/details/147338886" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;spm&quot;:&quot;3001.4136&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/147338886&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/147338886&quot;,&quot;ab&quot;:&quot;new&quot;}">2025.04.16华为暑期实习真题【数据中心网络地址规划】Java/Python/C++/JS/C 实现</a> </li> 
+        <li class="clearfix"> <a href="https://renjie.blog.csdn.net/article/details/147338629" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;spm&quot;:&quot;3001.4136&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/147338629&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net/article/details/147338629&quot;,&quot;ab&quot;:&quot;new&quot;}">2025.04.16华为暑期实习真题【寻找最便宜的地铁换乘方案】Java/Python/C++/JS/C 实现</a> </li> 
+       </ul> 
+       <div class="archive-bar"></div> 
+       <div class="archive-box"> 
+        <div class="archive-title">
+         2025
+        </div> 
+        <div class="archive-content"> 
+         <div class="archive-item"> 
+          <a href="https://renjie.blog.csdn.net?type=blog&amp;year=2025&amp;month=04" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net?type=blog&amp;year=2025&amp;month=04&quot;}"> <span class="time">04月</span> <span class="count">22篇</span> </a> 
+         </div> 
+         <div class="archive-item"> 
+          <a href="https://renjie.blog.csdn.net?type=blog&amp;year=2025&amp;month=03" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net?type=blog&amp;year=2025&amp;month=03&quot;}"> <span class="time">03月</span> <span class="count">44篇</span> </a> 
+         </div> 
+         <div class="archive-item"> 
+          <a href="https://renjie.blog.csdn.net?type=blog&amp;year=2025&amp;month=02" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net?type=blog&amp;year=2025&amp;month=02&quot;}"> <span class="time">02月</span> <span class="count">24篇</span> </a> 
+         </div> 
+         <div class="archive-item"> 
+          <a href="https://renjie.blog.csdn.net?type=blog&amp;year=2025&amp;month=01" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net?type=blog&amp;year=2025&amp;month=01&quot;}"> <span class="time">01月</span> <span class="count">18篇</span> </a> 
+         </div> 
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://renjie.blog.csdn.net?type=blog&amp;year=2024&amp;month=12" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net?type=blog&amp;year=2024&amp;month=12&quot;}"><span class="year">2024年</span><span class="num">420篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://renjie.blog.csdn.net?type=blog&amp;year=2023&amp;month=12" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net?type=blog&amp;year=2023&amp;month=12&quot;}"><span class="year">2023年</span><span class="num">1580篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://renjie.blog.csdn.net?type=blog&amp;year=2022&amp;month=12" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net?type=blog&amp;year=2022&amp;month=12&quot;}"><span class="year">2022年</span><span class="num">629篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://renjie.blog.csdn.net?type=blog&amp;year=2021&amp;month=12" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net?type=blog&amp;year=2021&amp;month=12&quot;}"><span class="year">2021年</span><span class="num">56篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://renjie.blog.csdn.net?type=blog&amp;year=2020&amp;month=02" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net?type=blog&amp;year=2020&amp;month=02&quot;}"><span class="year">2020年</span><span class="num">1篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://renjie.blog.csdn.net?type=blog&amp;year=2019&amp;month=11" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net?type=blog&amp;year=2019&amp;month=11&quot;}"><span class="year">2019年</span><span class="num">79篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://renjie.blog.csdn.net?type=blog&amp;year=2018&amp;month=12" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net?type=blog&amp;year=2018&amp;month=12&quot;}"><span class="year">2018年</span><span class="num">44篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://renjie.blog.csdn.net?type=blog&amp;year=2017&amp;month=12" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net?type=blog&amp;year=2017&amp;month=12&quot;}"><span class="year">2017年</span><span class="num">263篇</span></a>
+        </div> 
+        <div class="archive-list-item">
+         <a href="https://renjie.blog.csdn.net?type=blog&amp;year=2016&amp;month=12" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net?type=blog&amp;year=2016&amp;month=12&quot;}"><span class="year">2016年</span><span class="num">73篇</span></a>
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 详情页显示目录 --> 
+     <!--文章目录--> 
+     <div id="asidedirectory" class="aside-box"> 
+      <div class="groupfile" id="directory"> 
+       <h3 class="aside-title">目录</h3> 
+       <div class="align-items-stretch group_item"> 
+        <div class="pos-box"> 
+         <div class="scroll-box"> 
+          <div class="toc-box"></div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside>    
+   </div> 
+   <div class="recommend-right align-items-stretch clearfix" id="rightAside" data-type="recommend"> 
+    <aside class="recommend-right_aside"> 
+     <div class="rightside-fixed-hide"> 
+     </div> 
+     <div id="recommend-right"> 
+      <div class="flex-column aside-box groupfile" id="groupfile"> 
+       <div class="groupfile-div"> 
+        <h3 class="aside-title">目录</h3> 
+        <div class="align-items-stretch group_item"> 
+         <div class="pos-box"> 
+          <div class="scroll-box"> 
+           <div class="toc-box"></div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="aside-box kind_person d-flex flex-column"> 
+       <h3 class="aside-title">分类专栏</h3> 
+       <div class="align-items-stretch kindof_item" id="kind_person_column"> 
+        <div class="aside-content"> 
+         <ul> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12111005.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12111005.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756754.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 华为OD机试（Python）真题（E+A+B+C+D卷） </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">508篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12217917.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12217917.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756754.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 华为OD机试（C语言）真题（E+A+B+C+D卷） </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">455篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12199270.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12199270.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 华为OD机试JavaScript真题 E+A+B+C+D卷 </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">505篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12258991.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12258991.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756724.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> OD机试 Py/Java/JS合集（E+A+B+C+D卷） </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">1508篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12036814.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12036814.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 华为OD机试（C++）真题（E+A+B+C+D卷） </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">508篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12111006.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12111006.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 华为OD机试（JAVA）真题（E+A+B+C+D卷） </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">521篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12304460.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12304460.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756757.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 华为OD面试手撕真题题库&amp;八股文 </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">92篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9404814.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9404814.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/fde2b7a5c05ffaa0f83e8b6be6cacc39.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> Linux 基础知识 </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">19篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9268777.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9268777.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/974bb3dc0e18bc4c3b83347853565ffa.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> Matlab工程应用 </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">16篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9268264.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9268264.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/50ebd4af1d8ce5bdece6406b1f1ca55c.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> C++疑难杂症知识点 </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">140篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9267874.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9267874.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/296b33bd1f00cc93d437a193d04bd211.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> C++Primer 第五版习题答案详解 </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">77篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6679195.html" data-report-click="{&quot;mod&quot;:&quot;popu_826&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4230&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6679195.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/1c6f72e39e770a4903e164b0130c5c92.jpeg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【研究生课程总结】 </span> <span class="pay-tag">付费</span> </a> <span class="special-column-num">9篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9270323.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9270323.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/e210facf256b7bd8ef259e806cbf4b86.jpeg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 跟我一起深度探索C++对象模型 </span> </a> <span class="special-column-num">15篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9269029.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9269029.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/a02ed8a2fcbea20e0a931acb23c17a95.jpeg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 三维建模与渲染技术 </span> </a> <span class="special-column-num">22篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9267944.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9267944.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/fc88a0fbe35f4353a66eff92bedff269.jpeg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> Python实战小程序 </span> </a> <span class="special-column-num">13篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9294682.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9294682.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/7462383d1891b75adb7e937d2555033a.jpeg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 数据仓库之『浅尝』 </span> </a> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9282142.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9282142.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/blog_column_migrate/9364d5725d25be64c091c0f98f20035c.jpeg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> Linux入门学习教程 </span> </a> <span class="special-column-num">23篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12325971.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12325971.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756930.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 华为OD机试（C++）真题（2022&amp;2023） </span> </a> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9378491.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9378491.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756780.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> Linux 常用命令 </span> </a> <span class="special-column-num">8篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_10906260.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_10906260.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756923.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 博文分享 </span> </a> <span class="special-column-num">90篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_12015946.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_12015946.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756913.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 数据仓库/数据分析 SQL 面试真题 </span> </a> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9699387.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9699387.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756780.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> MapReduce </span> </a> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9695100.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9695100.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756757.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 计算广告阅读理解 </span> </a> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9395926.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9395926.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> Sql 学习 </span> </a> <span class="special-column-num">5篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9448750.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9448750.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> Flask IP 鉴权需求 </span> </a> <span class="special-column-num">4篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9395710.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9395710.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> Shell 脚本学习 </span> </a> <span class="special-column-num">2篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9371431.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9371431.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> ES 涉及知识点 </span> </a> <span class="special-column-num">3篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9391680.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9391680.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 个人公众号 </span> </a> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6525394.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6525394.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756918.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【C++Primer习题】 </span> </a> <span class="special-column-num">78篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6506120.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6506120.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756919.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【python基础知识】 </span> </a> <span class="special-column-num">19篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6515069.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6515069.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756754.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【python实战小程序】 </span> </a> <span class="special-column-num">10篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6833062.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6833062.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【排序算法总结】 </span> </a> <span class="special-column-num">10篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6836833.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6836833.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756925.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【Google C++Style Guide】 </span> </a> <span class="special-column-num">9篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6862694.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6862694.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【牛客网学习笔记】 </span> </a> <span class="special-column-num">12篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6517020.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6517020.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756757.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【遇到的实际编程问题】 </span> </a> <span class="special-column-num">25篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6571342.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6571342.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【三维建模仿真】 </span> </a> <span class="special-column-num">18篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6505531.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6505531.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756780.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【想写就写@@】 </span> </a> <span class="special-column-num">160篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6735149.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6735149.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756754.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【C++阶段性学习总结】 </span> </a> <span class="special-column-num">2篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6918840.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6918840.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756919.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【算法小白入门】 </span> </a> <span class="special-column-num">6篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6840737.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6840737.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756925.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【数据结构】 </span> </a> <span class="special-column-num">12篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6979452.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6979452.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756757.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【操作系统】 </span> </a> <span class="special-column-num">5篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6775464.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6775464.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756919.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【Leetcode】 </span> </a> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6584687.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6584687.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756724.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【论文相关】 </span> </a> <span class="special-column-num">1篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6504233.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6504233.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756916.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【会编程的段子手】 </span> </a> <span class="special-column-num">8篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_6577417.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_6577417.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756916.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【观影感悟】 </span> </a> <span class="special-column-num">5篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_8827917.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_8827917.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756754.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【C++进阶教程】 </span> </a> <span class="special-column-num">15篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_7169158.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_7169158.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> ~~~~~分割线~~~~~~ </span> </a> <span class="special-column-num">3篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_8953086.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_8953086.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756738.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【PPT技巧】 </span> </a> <span class="special-column-num">3篇</span> </li> 
+          <li> <a class="clearfix special-column-name" href="https://blog.csdn.net/misayaaaaa/category_9258854.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/misayaaaaa/category_9258854.html&quot;,&quot;ab&quot;:&quot;new&quot;}"> 
+            <div class="special-column-bar "></div> <img src="https://i-blog.csdnimg.cn/columns/default/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://i-blog.csdnimg.cn/columns/default/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'"> <span class=""> 【新人题学到的东西】 </span> </a> <span class="special-column-num">4篇</span> </li> 
+         </ul> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside> 
+   </div> 
+   <div class="recommend-right1  align-items-stretch clearfix" id="rightAsideConcision" data-type="recommend"> 
+    <aside class="recommend-right_aside"> 
+     <div id="recommend-right-concision"> 
+      <div class="flex-column aside-box groupfile" id="groupfileConcision"> 
+       <div class="groupfile-div1"> 
+        <h3 class="aside-title">目录</h3> 
+        <div class="align-items-stretch group_item"> 
+         <div class="pos-box"> 
+          <div class="scroll-box"> 
+           <div class="toc-box"></div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </aside> 
+   </div> 
+  </div> 
+  <div class="mask-dark"></div> 
+  <div class="skin-boxshadow"></div> 
+  <div class="directory-boxshadow"></div> 
+  <div class="comment-side-box-shadow comment-side-tit-close" id="commentSideBoxshadow"> 
+   <div class="comment-side-content"> 
+    <div class="comment-side-tit"> 
+     <div class="comment-side-tit-count">
+      评论&nbsp;
+      <span class="count">1</span>
+     </div> 
+     <img class="comment-side-tit-close" src="https://csdnimg.cn/release/blogv2/dist/pc/img/closeBt.png">
+    </div> 
+    <div id="pcCommentSideBox" class="comment-box comment-box-new2 " style="display:block"> 
+     <div class="comment-edit-box d-flex"> 
+      <div class="user-img"> 
+       <a href="https://blog.csdn.net/2401_84444578" target="_blank"> <img src="https://profile-avatar.csdnimg.cn/07a0cb100298449195b408323e319e9a_2401_84444578.jpg!1"> </a> 
+      </div> 
+      <form id="commentform"> 
+       <textarea class="comment-content" name="comment_content" id="comment_content" placeholder="欢迎高质量的评论，低质的评论会被折叠" maxlength="1000"></textarea> 
+       <div class="comment-reward-box" style="background-image: url('https://img-home.csdnimg.cn/images/20230131025301.png');"> 
+        <a class="btn-remove-reward"></a> 
+        <div class="form-reward-box"> 
+         <div class="info">
+           成就一亿技术人! 
+         </div> 
+         <div class="price-info">
+           拼手气红包
+          <span class="price">6.0元</span> 
+         </div> 
+        </div> 
+       </div> 
+       <div class="comment-operate-box"> 
+        <div class="comment-operate-l"> 
+         <span id="tip_comment" class="tip">还能输入<em>1000</em>个字符</span> 
+        </div> 
+        <div class="comment-operate-c">
+          &nbsp; 
+        </div> 
+        <div class="comment-operate-r"> 
+         <div class="comment-operate-item comment-reward"> 
+          <img class="comment-operate-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentReward.png" alt="红包"> 
+          <span class="comment-operate-tip">添加红包</span> 
+         </div> 
+         <div class="comment-operate-item comment-emoticon"> 
+          <img class="comment-operate-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentEmotionIcon.png" alt="表情包"> 
+          <span class="comment-operate-tip">插入表情</span> 
+          <div class="comment-emoticon-box comment-operate-isshow"> 
+           <div class="comment-emoticon-img-box"></div> 
+          </div> 
+         </div> 
+         <div class="comment-operate-item comment-code"> 
+          <img class="comment-operate-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentCodeIcon.png" alt="表情包"> 
+          <span class="comment-operate-tip">代码片</span> 
+          <div class="comment-code-box comment-operate-isshow"> 
+           <ul id="commentCode"> 
+            <li><a data-code="html">HTML/XML</a></li> 
+            <li><a data-code="objc">objective-c</a></li> 
+            <li><a data-code="ruby">Ruby</a></li> 
+            <li><a data-code="php">PHP</a></li> 
+            <li><a data-code="csharp">C</a></li> 
+            <li><a data-code="cpp">C++</a></li> 
+            <li><a data-code="javascript">JavaScript</a></li> 
+            <li><a data-code="python">Python</a></li> 
+            <li><a data-code="java">Java</a></li> 
+            <li><a data-code="css">CSS</a></li> 
+            <li><a data-code="sql">SQL</a></li> 
+            <li><a data-code="plain">其它</a></li> 
+           </ul> 
+          </div> 
+         </div> 
+         <div class="comment-operate-item"> 
+          <input type="hidden" id="comment_replyId" name="comment_replyId"> 
+          <input type="hidden" id="article_id" name="article_id" value="131023424"> 
+          <input type="hidden" id="comment_userId" name="comment_userId" value=""> 
+          <input type="hidden" id="commentId" name="commentId" value=""> 
+          <a data-report-click="{&quot;mod&quot;:&quot;1582594662_003&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4227&quot;,&quot;ab&quot;:&quot;new&quot;}"> <input type="submit" class="btn-comment btn-comment-input" value="评论"> </a> 
+         </div> 
+        </div> 
+       </div> 
+      </form> 
+     </div> 
+     <div class="comment-list-container"> 
+      <div class="comment-list-box comment-operate-item"> 
+      </div> 
+      <div id="lookGoodComment" class="look-good-comment side-look-comment"> 
+       <a class="look-more-comment">查看更多评论<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentArrowDownWhite.png" alt=""></a> 
+      </div> 
+      <div id="lookFlodComment" class="look-flod-comment"> 
+       <span class="count"></span>&nbsp;条评论被折叠&nbsp;
+       <a class="look-more-flodcomment">查看</a> 
+      </div> 
+      <div class="opt-box text-center"> 
+       <div class="btn btn-sm btn-link-blue" id="btnMoreComment"></div> 
+      </div> 
+     </div> 
+    </div> 
+    <div id="pcFlodCommentSideBox" class="pc-flodcomment-sidebox"> 
+     <div class="comment-fold-tit">
+      <span id="lookUnFlodComment" class="back"><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentArrowLeftWhite.png" alt=""></span>被折叠的&nbsp;
+      <span class="count"></span>&nbsp;条评论 
+      <a href="https://blogdev.blog.csdn.net/article/details/122245662" class="tip" target="_blank">为什么被折叠?</a> 
+      <a href="https://bbs.csdn.net/forums/FreeZone" class="park" target="_blank"> <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/iconPark.png">到【灌水乐园】发言</a> 
+     </div> 
+     <div class="comment-fold-content"></div> 
+     <div id="lookBadComment" class="look-bad-comment side-look-comment"> 
+      <a class="look-more-comment">查看更多评论<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentArrowDownWhite.png" alt=""></a> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="comment-rewarddialog-box"> 
+    <div class="form-box"> 
+     <div class="title-box">
+       添加红包 
+      <a class="btn-form-close"></a> 
+     </div> 
+     <form id="commentRewardForm"> 
+      <div class="ipt-box"> 
+       <label for="txtName">祝福语</label> 
+       <div class="ipt-btn-box"> 
+        <input type="text" name="name" id="txtName" autocomplete="off" maxlength="50"> 
+        <a class="btn-ipt btn-random"></a> 
+       </div> 
+       <p class="notice">请填写红包祝福语或标题</p> 
+      </div> 
+      <div class="ipt-box"> 
+       <label for="txtSendAmount">红包数量</label> 
+       <div class="ipt-txt-box"> 
+        <input type="text" name="sendAmount" maxlength="4" id="txtSendAmount" placeholder="请填写红包数量(最小10个)" autocomplete="off"> 
+        <span class="after-txt">个</span> 
+       </div> 
+       <p class="notice">红包个数最小为10个</p> 
+      </div> 
+      <div class="ipt-box"> 
+       <label for="txtMoney">红包总金额</label> 
+       <div class="ipt-txt-box error"> 
+        <input type="text" name="money" maxlength="5" id="txtMoney" placeholder="请填写总金额(最低5元)" autocomplete="off"> 
+        <span class="after-txt">元</span> 
+       </div> 
+       <p class="notice">红包金额最低5元</p> 
+      </div> 
+      <div class="balance-info-box"> 
+       <label>余额支付</label> 
+       <div class="balance-info">
+         当前余额
+        <span class="balance">3.43</span>元 
+        <a href="https://i.csdn.net/#/wallet/balance/recharge" class="link-charge" target="_blank">前往充值 &gt;</a> 
+       </div> 
+      </div> 
+      <div class="opt-box"> 
+       <div class="pay-info">
+         需支付：
+        <span class="price">10.00</span>元 
+       </div> 
+       <button type="button" class="ml-auto btn-cancel">取消</button> 
+       <button type="button" class="ml8 btn-submit" disabled="true">确定</button> 
+      </div> 
+     </form> 
+    </div> 
+   </div> 
+   <div class="rr-guide-box"> 
+    <div class="rr-first-box"> 
+     <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward02.png" alt=""> 
+     <button class="btn-guide-known next">下一步</button> 
+    </div> 
+    <div class="rr-second-box"> 
+     <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward03.png" alt=""> 
+     <button class="btn-guide-known known">知道了</button> 
+    </div> 
+   </div> 
+  </div> 
+  <div class="redEnvolope" id="redEnvolope"> 
+   <div class="env-box"> 
+    <div class="env-container"> 
+     <div class="pre-open" id="preOpen"> 
+      <div class="top"> 
+       <header> 
+        <img class="clearTpaErr" :src="redpacketAuthor.avatar" alt=""> 
+        <div class="author">
+         成就一亿技术人!
+        </div> 
+       </header> 
+       <div class="bot-icon"></div> 
+      </div> 
+      <footer> 
+       <div class="red-openbtn open-start"></div> 
+       <div class="tip">
+         领取后你会自动成为博主和红包主的粉丝 
+        <a class="rule" target="_blank">规则</a> 
+       </div> 
+      </footer> 
+     </div> 
+     <div class="opened" id="opened"> 
+      <div class="bot-icon"> 
+       <header> 
+        <a class="creatorUrl" href="" target="_blank"> <img class="clearTpaErr" src="https://profile-avatar.csdnimg.cn/default.jpg!2" alt=""> </a> 
+        <div class="author"> 
+         <div class="tt">
+          hope_wisdom
+         </div> 发出的红包 
+        </div> 
+       </header> 
+      </div> 
+      <div class="receive-box"> 
+       <header></header> 
+       <div class="receive-list"> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="close-btn"></div> 
+   </div> 
+  </div> 
+  <div id="rewardNew" class="reward-popupbox-new"> 
+   <p class="rewad-title">打赏作者<span class="reward-close"><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/closeBt.png"></span></p> 
+   <dl class="profile-box"> 
+    <dd> 
+     <a href="https://renjie.blog.csdn.net" data-report-click="{&quot;mod&quot;:&quot;popu_379&quot;,&quot;dest&quot;:&quot;https://renjie.blog.csdn.net&quot;,&quot;ab&quot;:&quot;new&quot;}"> <img src="https://profile-avatar.csdnimg.cn/4919c662b07947938ddc99c050d86c8f_misayaaaaa.jpg!1" class="avatar_pic"> </a> 
+    </dd> 
+    <dt> 
+     <p class="blog-name">MISAYAONE</p> 
+     <p class="blog-discript">你的鼓励将是我创作的最大动力</p> 
+    </dt> 
+   </dl> 
+   <div class="reward-box-new"> 
+    <div class="reward-content">
+     <div class="reward-right"></div>
+    </div> 
+   </div> 
+   <div class="money-box"> 
+    <span class="choose-money choosed" data-id="1">¥1</span> 
+    <span class="choose-money " data-id="2">¥2</span> 
+    <span class="choose-money " data-id="4">¥4</span> 
+    <span class="choose-money " data-id="6">¥6</span> 
+    <span class="choose-money " data-id="10">¥10</span> 
+    <span class="choose-money " data-id="20">¥20</span> 
+   </div> 
+   <div class="sure-box"> 
+    <div class="sure-box-money"> 
+     <div class="code-box"> 
+      <div class="code-num-box"> 
+       <span class="code-name">扫码支付：</span>
+       <span class="code-num">¥1</span> 
+      </div> 
+      <div class="code-img-box"> 
+       <div class="renovate"> 
+        <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-time-out.png"> 
+        <span>获取中</span> 
+       </div> 
+      </div> 
+      <div class="code-pay-box"> 
+       <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/newWeiXin.png" alt=""> 
+       <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/newZhiFuBao.png" alt=""> 
+       <span>扫码支付</span> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="sure-box-blance"> 
+     <p class="tip">您的余额不足，请更换扫码支付或<a target="_blank" data-report-click="{&quot;mod&quot;:&quot;1597646289_003&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4302&quot;}" href="https://i.csdn.net/#/wallet/balance/recharge?utm_source=RewardVip" class="go-invest">充值</a></p> 
+     <p class="is-have-money"><a class="reward-sure">打赏作者</a></p> 
+    </div> 
+   </div> 
+  </div> 
+  <div class="pay-code"> 
+   <div class="pay-money">
+    实付
+    <span class="pay-money-span" data-nowprice="" data-oldprice="">元</span>
+   </div> 
+   <div class="content-blance">
+    <a class="blance-bt" href="javascript:;">使用余额支付</a>
+   </div> 
+   <div class="content-code"> 
+    <div id="payCode" data-id=""> 
+     <div class="renovate"> 
+      <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-time-out.png"> 
+      <span>点击重新获取</span> 
+     </div> 
+    </div> 
+    <div class="pay-style">
+     <span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/weixin.png"></span>
+     <span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/zhifubao.png"></span>
+     <span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/jingdong.png"></span>
+     <span class="text">扫码支付</span>
+    </div> 
+   </div> 
+   <div class="bt-close"> 
+    <svg t="1567152543821" class="icon" viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10924" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12"> 
+     <defs> 
+      <style type="text/css"></style> 
+     </defs> 
+     <path d="M512 438.378667L806.506667 143.893333a52.032 52.032 0 1 1 73.6 73.621334L585.621333 512l294.485334 294.485333a52.074667 52.074667 0 0 1-73.6 73.642667L512 585.621333 217.514667 880.128a52.053333 52.053333 0 1 1-73.621334-73.642667L438.378667 512 143.893333 217.514667a52.053333 52.053333 0 1 1 73.621334-73.621334L512 438.378667z" fill="" p-id="10925"></path> 
+    </svg> 
+   </div> 
+   <div class="pay-balance"> 
+    <input type="radio" class="pay-code-radio" data-type="details"> 
+    <span class="span">钱包余额</span> 
+    <span class="balance" style="color:#FC5531;font-size:14px;">0</span> 
+    <div class="pay-code-tile"> 
+     <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-help.png" alt=""> 
+     <div class="pay-code-content"> 
+      <div class="span"> 
+       <p class="title">抵扣说明：</p> 
+       <p> 1.余额是钱包充值的虚拟货币，按照1:1的比例进行支付金额的抵扣。<br> 2.余额无法直接购买下载，可以购买VIP、付费专栏及课程。</p> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+   <a class="pay-balance-con" href="https://i.csdn.net/#/wallet/balance/recharge" target="_blank"><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/recharge.png" alt=""><span>余额充值</span></a> 
+  </div> 
+  <div style="display:none;"> 
+   <img src="" onerror="setTimeout(function(){if(!/(csdn.net|iteye.com|baiducontent.com|googleusercontent.com|360webcache.com|sogoucdn.com|bingj.com|baidu.com)$/.test(window.location.hostname)){var test=&quot;\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74&quot;}},3000);"> 
+  </div> 
+  <div class="keyword-dec-box" id="keywordDecBox"></div>  
+  <!-- 富文本柱状图  --> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/chart.css">        
+  <link rel="stylesheet" href="https://g.csdnimg.cn/lib/cboxEditor/1.1.6/embed-editor.min.css"> 
+  <link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/codesnippet/lib/highlight/styles/atom-one-dark.css">                    
+ </body>
+</html><style>*{user-select: auto !important;}</style>
